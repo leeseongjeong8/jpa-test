@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.tmax.tibero.jdbc.TbDriver
+    url: jdbc:tibero:thin:@10.47.39.125:8629:DB_D_GMD
+    username: GMDMF
+    password: gmdmf
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      #ddl-auto 는 테이터베이스 스키마 자동생성
+      use-new-id-generator-mappings: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+  mvc:    view:      prefix: WEB-INF/view/
+      suffix: .jsp
