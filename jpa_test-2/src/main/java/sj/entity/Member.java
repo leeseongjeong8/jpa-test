@@ -10,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Builder;
 import lombok.Getter;
 
-@Builder
+
 @Getter
 @Table(name="member")
 @Entity
@@ -22,11 +21,16 @@ public class Member {
 	@Id @GeneratedValue @Column(name="MEMBER_ID")
 	private Long id;
 	
+	@Column(name="USER_NAME")
 	private String username;
 	
 	@OneToMany(mappedBy = "member")
-	private List<Order> orders = new ArrayList<>();
+	private List<Order> orders = new ArrayList<Order>();
 	
-	
+	public void addOrder(Order order) {
+		this.orders.add(order);
+		
+		order.setMember(this);
+	}
 	
 }

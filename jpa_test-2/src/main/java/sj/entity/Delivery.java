@@ -35,7 +35,12 @@ public class Delivery {
 	private DeliveryStatus status;
 	
 	public void setOrder(Order order) {
+		// setOrder와 setDelivery 무한루프 -> 
 		this.order=order;
+		if(order.getDelivery()!=this) {
+			order.setDelivery(this);
+		}
+
 	}
 	
 	

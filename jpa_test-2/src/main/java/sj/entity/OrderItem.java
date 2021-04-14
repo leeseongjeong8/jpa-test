@@ -1,5 +1,6 @@
 package sj.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,27 +26,48 @@ public class OrderItem {
 	@ManyToOne @JoinColumn(name="ORDER_ID")
 	private Order order;
 	
+	@ManyToOne @JoinColumn(name="ITEM_ID")
+	private Item item;
+	
+	@Column(name="ORDER_PRICE")
+	private Integer orderPrice;
+	
+	@Column(name="ITEM_COUNT")
+	private Integer itemCount;
+	
 	public void setOrder(Order order) {
 		this.order = order;
 		if(!order.getOrderItems().contains(this)) {
 		order.getOrderItems().add(this);
 		}
+		//현재 로직은
+		/*<Order에서 실행시>
+		 * 1. Order의 List에 OrderItem추가
+		 * 2. OrderItem의 setOrder 메서드 호출하여 OrderItem에도 Order를 추가
+		 *     2-1. setOrder를 호출
+		 *     2-2. order를 OrderItem에 셋팅한다
+		 *     2-3. 셋팅한 order의 OrderItem을 호출하여 다시 orderItem추가
+		 * 즉 1 과 2-3에서 동일한 작업이 2번수행됨...
+		 * 
+		 * 
+		 * 
+		 * 양방햔 관계이므로 양쪽에서 관리할 수 있게 메서드를 양측에 써주니까 이런문제가 발생함...
+		 * ==> 조건 추가! 1에서 이미 list에 this가 추가 되었다면 2-3 은 실행되지 않도록!!
+		 * 
+		 * 
+		 */
 	}
 	
-	//현재 로직은
-	/*<Order에서 실행시>
-	 * 1. Order의 List에 OrderItem추가
-	 * 2. OrderItem의 setOrder 메서드 호출하여 OrderItem에도 Order를 추가
-	 *     2-1. setOrder를 호출
-	 *     2-2. order를 OrderItem에 셋팅한다
-	 *     2-3. 셋팅한 order의 OrderItem을 호출하여 다시 orderItem추가
-	 * 즉 1 과 2-3에서 동일한 작업이 2번수행됨...
-	 * 
-	 * 
-	 * 
-	 * 양방햔 관계이므로 양쪽에서 관리할 수 있게 메서드를 양측에 써주니까 이런문제가 발생함...
-	 * ==> 조건 추가! 1에서 이미 list에 this가 추가 되었다면 2-3 은 실행되지 않도록!!
-	 * 
-	 * 
-	 */
+	public void setItem(Item item) {
+		
+		this.item= item;
+		if(!item.getOrderItems().contains(this)) {
+			item.getOrderItems().add(this);
+		}
+	
+		
+	}
+
+	
+
 }

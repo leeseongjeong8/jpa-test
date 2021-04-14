@@ -2,7 +2,6 @@ package sj.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,14 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import lombok.Builder;
 import lombok.Getter;
 import sj.deploy.OrderStatus;
 
-@Builder
+
 @Getter
 @Entity
 @Table(name="ORDERS")
@@ -37,7 +33,7 @@ public class Order {
 	
 	//양방향관계이면서 owner가 아닌 경우 mappedBy를 통해 명시해준다. (owner는 @JoinColumn()으로 명시)
 	@OneToMany(mappedBy = "order")
-	private List<OrderItem> orderItems = new ArrayList<>();
+	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 	
 	@OneToOne @JoinColumn(name="DELIVERY_ID")
 	private Delivery delivery;
@@ -84,6 +80,7 @@ public class Order {
 		//2. member셋팅
 			this.member=member;
 		//3. member에 가서 Order셋팅
+			if(!member.getOrders().contains(this))
 			member.getOrders().add(this);
 		
 	}
@@ -91,7 +88,10 @@ public class Order {
 	public void setDelivery(Delivery delivery) {
 		//OneToOne이고 delivery 에서 참조할 수 있는 Order는 하나이므로 관계 변경시 기존관계 저절로 제거
 		this.delivery = delivery;
-		delivery.setOrder(this);
+		if(delivery.getOrder()!=this) {
+			delivery.setOrder(this);
+		}
+		
 	}
 	
 	public void addOrderItems(OrderItem orderItem) {
