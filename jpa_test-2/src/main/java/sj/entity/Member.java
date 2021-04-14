@@ -20,7 +20,7 @@ import lombok.Getter;
 public class Member {
 	
 	@Id @GeneratedValue @Column(name="MEMBER_ID")
-	private String id;
+	private Long id;
 	
 	private String username;
 	
