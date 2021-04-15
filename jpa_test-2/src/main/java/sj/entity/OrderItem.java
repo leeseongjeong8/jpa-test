@@ -2,15 +2,18 @@ package sj.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
-@Builder
 @Table(name="ORDER_ITEM")
 @Entity
 public class OrderItem {
@@ -22,6 +25,8 @@ public class OrderItem {
 		2. 식별클래스를 생성하고 @IdClass(식별클래스) 해야함   find(클래스, 식별클래스) 를 통해 참조가능
 		3. 1,2 할필요없이 그냥 새로운 기본키 생성!  (다 : 다 를 1:다 다:1 로 매핑하는것을 권장)
 	 */
+	@Id @GeneratedValue @Column(name="ORDER_ITEM_ID")
+	private Long id;
 
 	@ManyToOne @JoinColumn(name="ORDER_ID")
 	private Order order;
@@ -34,6 +39,8 @@ public class OrderItem {
 	
 	@Column(name="ITEM_COUNT")
 	private Integer itemCount;
+	
+	
 	
 	public void setOrder(Order order) {
 		this.order = order;
