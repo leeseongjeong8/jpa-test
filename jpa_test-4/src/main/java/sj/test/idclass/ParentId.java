@@ -16,6 +16,14 @@ public class ParentId implements Serializable{
 	 * Parent.id1 , Parent.id2값을 가져와서 ParentId를 생성하고 이 ParentId를 영속성 컨텍스트의 키로 사용한다.
 	 */
 	
+	/*
+	 * 자바의 모든 클래스는 기본적으로 Object를 상속받음
+	 * Object 에서의 equals메서드는 동일성 비교 (==비교) 를 함으로 
+	 * 적절히 오버로딩 하지 않은 경우에 ==비교가 실행됨
+	 * 
+	 * 영속성 컨텍스트는 식별자클래스를 키로 사용하여 엔티티를 관리
+	 */
+	
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub

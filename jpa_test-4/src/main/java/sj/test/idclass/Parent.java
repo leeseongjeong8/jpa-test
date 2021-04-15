@@ -12,6 +12,7 @@ import sj.test.embeddedclass.ParentId2;
 @Entity
 public class Parent {
 
+	//복합키에는 @GeneratedValue사용불가 둘중 하나에만도 사용불가
 	@Id @Column(name="PARENT_ID1")
 	private Integer id1;
 	
